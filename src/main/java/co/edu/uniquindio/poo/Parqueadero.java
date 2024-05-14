@@ -8,7 +8,12 @@ import javax.swing.JOptionPane;
 public class Parqueadero {
    
    public String nombre;
-   public Collection <Vehiculo> vehiculos ;
+   public static Collection <Vehiculo> vehiculos ;
+
+   public static void main(String args[])
+   { Vehiculo.crearParqueadero();
+
+   }
     public Parqueadero(String nombre)
     {
         this.nombre=nombre;
@@ -17,11 +22,11 @@ public class Parqueadero {
 
     }
 
-
-    public String ocupado(Vehiculo parqueadero){
+    // Metodo para verificar si un puesto esta ocupado
+    public static String ocupado(Vehiculo vehiculo){
        
        String a;
-        if(parqueadero!=null){
+        if(vehiculo!=null){
 
             a= "Ocupado";
 
@@ -32,12 +37,19 @@ public class Parqueadero {
         }
         return a;
     }
-    public void agregarVehiculo(Vehiculo vehiculo){
+    //Metodo para agregar un vehiculo
+    public static void agregarVehiculo(Vehiculo vehiculo){
+
         assert verificarPlacaExiste(vehiculo.placa()) == false;
         vehiculos.add(vehiculo);
+    
+    
+    
+    
+    
     }
-
-    private boolean verificarPlacaExiste(String placa){
+  // Metodo para verfificar que la placa esta en la lista
+    private static boolean verificarPlacaExiste(String placa){
         boolean existe = false;
         for(Vehiculo vehiculo : vehiculos){
             if(vehiculo.placa().equals(placa)){
@@ -48,7 +60,7 @@ public class Parqueadero {
     }
 
        // función para imprimir matriz
-public String imprimirMatriz(Vehiculo[][] matriz){	
+public static String imprimirMatriz(Vehiculo[][] matriz){	
 	String resultado = "";
 	for(int i = 0; i < matriz.length; i++){
 		for(int j = 0; j < matriz.length; j++){
@@ -60,7 +72,7 @@ public String imprimirMatriz(Vehiculo[][] matriz){
 }
 
 // procedimiento para imprimir una matriz en un JoptionPane
-public void imprimirMatrizResultado(String mensaje){
+public static void imprimirMatrizResultado(String mensaje){
 	JOptionPane.showMessageDialog(null, mensaje);
 }
 

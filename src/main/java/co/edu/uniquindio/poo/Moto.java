@@ -3,10 +3,13 @@ public class Moto extends Vehiculo {
 
     public String velocidadMaxima;
     public String tipoMoto;
-
-    public Moto(String placa, String velocidadMaxima,String tipoMoto, String propietario){
+     //Constructor
+    public Moto(String placa,String modelo, String velocidadMaxima,String tipoMoto, Propietario propietario){
         this.placa=placa;
         this.propietario=propietario;
+        this.modelo=modelo;
+        this.tipoMoto=tipoMoto;
+        this.velocidadMaxima=velocidadMaxima;
 
         
     }

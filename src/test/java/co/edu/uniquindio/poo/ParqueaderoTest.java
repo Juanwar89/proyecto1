@@ -21,8 +21,11 @@ public class ParqueaderoTest {
         Moto moto1= new Moto("321","120","Hibrida","Maria");
         parqueadero.agregarVehiculo(auto1);
         parqueadero.agregarVehiculo(moto1);
-
-        Vehiculo [][] parqueadero1 = new Vehiculo [3][4];
+        int x= Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese las filas"));
+        int v= Integer.parseInt(JOptionPane.showInputDialog(null,"Ingrese las filas"));
+        
+         
+        Vehiculo [][] parqueadero1 = new Vehiculo [x][v];
         parqueadero.imprimirMatrizResultado("La matriz es: \n" + parqueadero.imprimirMatriz(parqueadero1));
         
         parqueadero1[0][0]= auto1;
