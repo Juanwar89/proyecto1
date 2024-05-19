@@ -7,22 +7,46 @@ public abstract class Vehiculo {
     public String placa;
     public String modelo;
     public Propietario propietario;
-   
- 
-    //Retorna la placa
-    public String placa(){
+
+    public Vehiculo(String placa, String modelo, Propietario propietario) {
+        this.placa = placa;
+        this.modelo = modelo;
+        this.propietario = propietario;
+        assert !"".equals(placa);
+        assert !"".equals(modelo);
+    }
+
+    public String getPlaca() {
         return placa;
     }
-    //Retorna un propietario
-    public Propietario propietario(){
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Propietario getPropietario() {
         return propietario;
     }
 
-    
+    public void setPropietario(Propietario propietario) {
+        this.propietario = propietario;
+    }
     
     public static void crearParqueadero()
     {  
          int menu=8;
+         double tarifaMoto=0;
+         double tarifaMotoClasica=2000;
+         double tarifaMotoHibrida=3000;
+         double tarifaAuto=4000;
 //Creacion del arreglo que representara el parqueadero
          int filas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas filas es el parqueadero?"));
          int columnas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas columnas es el parqueadero?"));
@@ -40,7 +64,11 @@ public abstract class Vehiculo {
         "3.- Verificar puesto libre\n" +
         "4.- Registro de vehiculos\n" +
         "5.- Consulta de propietario\n" +
-        "0.- Salir"));
+        "6.- Modificar tarifa\n" +
+        "0.- Salir\n"+
+        "Tarifa Auto: $"+tarifaAuto+" por hora.\n"+
+        "Tarifa Moto Clásica: $"+tarifaMotoClasica+" por hora.\n"+
+        "Tarifa Moto Híbrida: $"+tarifaMotoHibrida+" por hora.\n"));
 
         switch(menu){
             case 1:
@@ -70,14 +98,17 @@ public abstract class Vehiculo {
             if(queTipo==1)
             { 
                 tipoMoto="Hibrida";
+                tarifaMoto=tarifaMotoHibrida;
+                
             }
             if(queTipo==2)
             {
                 tipoMoto="Clasica";
+                tarifaMoto=tarifaMotoClasica;
             }
 
 
-          var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario);
+          var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario,tarifaMoto);
           //Asignacion de puesto
           parqueadero1[Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"))][Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"))]=moto;
           Parqueadero.agregarVehiculo(moto);
@@ -89,7 +120,7 @@ public abstract class Vehiculo {
             String modelo=JOptionPane.showInputDialog(null,"Modelo:");
             
 
-          var auto= new Auto(placa, modelo,propietario);
+          var auto= new Auto(placa, modelo,propietario,tarifaAuto);
           parqueadero1[Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"))][Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"))]=auto;
           Parqueadero.agregarVehiculo(auto);
         }
@@ -141,6 +172,7 @@ public abstract class Vehiculo {
                 break;
 
                 case 6:
+                tarifaAuto=Double.parseDouble(JOptionPane.showInputDialog(null,"Ingrese la nueva tarifa del auto"));
 
 
 

@@ -1,16 +1,20 @@
 package co.edu.uniquindio.poo;
 public class Moto extends Vehiculo {
 
-    public String velocidadMaxima;
-    public String tipoMoto;
-     //Constructor
-    public Moto(String placa,String modelo, String velocidadMaxima,String tipoMoto, Propietario propietario){
-        this.placa=placa;
-        this.propietario=propietario;
-        this.modelo=modelo;
-        this.tipoMoto=tipoMoto;
-        this.velocidadMaxima=velocidadMaxima;
+    private int velocidadMax;
+    private TipoMoto TipoMoto;
 
-        
+    public Moto(String placa, String modelo, TipoMoto TipoMoto, Propietario propietario, int velocidadMax) {
+        super(placa, modelo, propietario);
+        this.velocidadMax = velocidadMax;
+        assert velocidadMax >= 0;
+    }
+    
+    public int getVelocidadMax() {
+        return velocidadMax;
+    }
+
+    public TipoMoto getTipoMoto() {
+        return TipoMoto;
     }
 }

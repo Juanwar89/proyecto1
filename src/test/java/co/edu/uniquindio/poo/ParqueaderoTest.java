@@ -49,10 +49,24 @@ public class ParqueaderoTest {
             
         }
         }
-        JOptionPane.showMessageDialog(null,a);
-        
+        JOptionPane.showMessageDialog(null,a);   
+    }
 
-        
-        
+    @Test
+    public void testAgregarPuesto() {
+        Parqueadero parqueadero = new Parqueadero("doña marta", 3, 3);
+        Propietario propietario1 = new Propietario("Carlos", "10001");
+        Propietario propietario2 = new Propietario("Maria", "10002");
+        Auto auto = new Auto("ABC123", "Toyota", propietario1);
+        Auto auto2 = new Auto("XYZ789", "Honda", propietario2);
+        parqueadero.agregarPuesto(auto, 0, 0);
+        assertEquals(auto, parqueadero.getPuestos()[0][0]);
+        assertThrows(AssertionError.class, () -> {
+            parqueadero.agregarPuesto(auto2, 0, 0);
+        });
+        assertNotEquals(auto2, parqueadero.getPuestos()[0][0]);
+        assertThrows(AssertionError.class, () -> {
+            parqueadero.agregarPuesto(auto2, 5, 5);
+        });
     }
 }
