@@ -27,12 +27,9 @@ public class Parqueadero {
        
        String a;
         if(vehiculo!=null){
-
             a= "Ocupado";
-
         }
         else{
-
         a= "desocupado";
         }
         return a;
@@ -40,7 +37,7 @@ public class Parqueadero {
     //Metodo para agregar un vehiculo
     public static void agregarVehiculo(Vehiculo vehiculo){
 
-        assert verificarPlacaExiste(vehiculo.placa()) == false;
+        assert verificarPlacaExiste(vehiculo.getPlaca()) == false;
         vehiculos.add(vehiculo);
     
     
@@ -48,11 +45,12 @@ public class Parqueadero {
     
     
     }
-  // Metodo para verfificar que la placa esta en la lista
-    private static boolean verificarPlacaExiste(String placa){
+  // Metodo para verificar que la placa esta en la lista
+    public static boolean verificarPlacaExiste(String placa){
         boolean existe = false;
-        for(Vehiculo vehiculo : vehiculos){
-            if(vehiculo.placa().equals(placa)){
+        for(Vehiculo vehicu : vehiculos){
+            
+            if(vehicu != null && vehicu.getPlaca()==(placa)){
                 existe = true;
             }
         }
@@ -60,16 +58,16 @@ public class Parqueadero {
     }
 
        // función para imprimir matriz
-public static String imprimirMatriz(Vehiculo[][] matriz){	
-	String resultado = "";
-	for(int i = 0; i < matriz.length; i++){
-		for(int j = 0; j < matriz.length; j++){
-			resultado += matriz[i][j] + "  ";
-		}
-		resultado = resultado + "\n";
-	}
-	return resultado;
-}
+       public static String imprimirMatriz(Vehiculo[][] matriz,int a, int b){	
+        String resultado = "";
+        for(int i = 0; i < a; i++){
+            for(int j = 0; j <b; j++){
+                resultado += matriz[i][j] + "  ";
+            }
+            resultado = resultado + "\n";
+        }
+        return resultado;
+    }
 
 // procedimiento para imprimir una matriz en un JoptionPane
 public static void imprimirMatrizResultado(String mensaje){
@@ -77,12 +75,24 @@ public static void imprimirMatrizResultado(String mensaje){
 }
 
 
+public static String verificarPlaca(Vehiculo[][] matriz, String placa){	
+	String resultado = "No existe";
+	for(int i = 0; i < matriz.length; i++){
+		for(int j = 0; j < matriz.length; j++){
+			if(matriz!=null){
+            if(matriz[i][j].getPlaca()==placa)
+            { 
+                resultado="existe";
+            }}
+		}
+		
+	}
+	return resultado;
+}
 
-    
-    
-    
 
-   
+
+
   
 
 

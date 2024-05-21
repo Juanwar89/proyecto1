@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo;
 
+
+
 import javax.swing.JOptionPane;
 
 public abstract class Vehiculo {
@@ -7,10 +9,12 @@ public abstract class Vehiculo {
     public String placa;
     public String modelo;
     public Propietario propietario;
-   
+    public double tarifa;
+    public int horas;
+    
  
     //Retorna la placa
-    public String placa(){
+    public String getPlaca(){
         return placa;
     }
     //Retorna un propietario
@@ -18,17 +22,26 @@ public abstract class Vehiculo {
         return propietario;
     }
 
+    public void setHora(int nuevaHora)
+    {
+       horas=nuevaHora;
+    }
+
     
     
     public static void crearParqueadero()
     {  
-         int menu=8;
+         int menu=-1;
+         double tarifaMoto=0;
+         double tarifaMotoClasica=2000;
+         double tarifaMotoHibrida=3000;
+         double tarifaAuto=4000;
 //Creacion del arreglo que representara el parqueadero
          int filas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas filas es el parqueadero?"));
          int columnas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas columnas es el parqueadero?"));
          Vehiculo [][] parqueadero1 = new Vehiculo [filas][columnas];
 
-         Parqueadero.imprimirMatrizResultado("La matriz es: \n" + Parqueadero.imprimirMatriz(parqueadero1));
+         Parqueadero.imprimirMatrizResultado("La matriz es: \n" + Parqueadero.imprimirMatriz(parqueadero1, filas, columnas));
        
         
         //Mientras la opción elegida sea 0, preguntamos al usuario
@@ -40,7 +53,16 @@ public abstract class Vehiculo {
         "3.- Verificar puesto libre\n" +
         "4.- Registro de vehiculos\n" +
         "5.- Consulta de propietario\n" +
-        "0.- Salir"));
+        "6.- Modificar tarifa\n" +
+        "7.-Pasar hora o dia\n"+
+        "8.-Reporte Diario y Mensual\n"+
+        "0.- Salir\n"+
+        "Tarifa Auto: $"+tarifaAuto+" por hora.\n"+
+        "Tarifa Moto Clásica: $"+tarifaMotoClasica+" por hora.\n"+
+        "Tarifa Moto Híbrida: $"+tarifaMotoHibrida+" por hora.\n"+
+        
+        "Nota: Por un dia se cobran las 24 horas. "
+          ));
 
         switch(menu){
             case 1:
@@ -70,18 +92,33 @@ public abstract class Vehiculo {
             if(queTipo==1)
             { 
                 tipoMoto="Hibrida";
+                tarifaMoto=tarifaMotoHibrida;
+                
             }
             if(queTipo==2)
             {
                 tipoMoto="Clasica";
+                tarifaMoto=tarifaMotoClasica;
             }
 
 
-          var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario);
-          //Asignacion de puesto
-          parqueadero1[Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"))][Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"))]=moto;
+          var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario,tarifaMoto,0);
+
+          //Asignacion de puesto en el parqueadero
+          int i=Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"));
+          int j=Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"));
+
+          //Metodo para verificar que el puesto este vacio y el vehiculo no este ya registrado
+          
+          if(parqueadero1[i][j]==null )
+          {
+            parqueadero1[i][j]=moto;
+        }
+
+          
           Parqueadero.agregarVehiculo(moto);
         }
+
         //Creacion de auto
         if(queVehiculo==2)
         {
@@ -89,13 +126,18 @@ public abstract class Vehiculo {
             String modelo=JOptionPane.showInputDialog(null,"Modelo:");
             
 
-          var auto= new Auto(placa, modelo,propietario);
-          parqueadero1[Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"))][Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"))]=auto;
-          Parqueadero.agregarVehiculo(auto);
+          var auto= new Auto(placa, modelo,propietario,tarifaAuto,0);
+          //Asignación de puesto en el parqueadero
+          int a=Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"));
+          int b=Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"));
+          //Metodo para verificar que el puesto este vacio y el vehiculo no este ya registrado
+          if (parqueadero1[a][b]==null){
+          parqueadero1[a][b]=auto;
         }
+         
 
-       
-              
+        Parqueadero.agregarVehiculo(auto);
+        }
                 break;
             case 2: 
              //Eliminacion de vehivulo
@@ -113,15 +155,16 @@ public abstract class Vehiculo {
                 
                 break;
             case 4: 
+            Parqueadero.imprimirMatrizResultado("La matriz es: \n" + Parqueadero.imprimirMatriz(parqueadero1, filas, columnas));
 
             //Metodo para recorrer el arreglo de vehiculos e imprimir sus placas
             String a="";
-            for ( int i = 0; i < parqueadero1.length; i++ ){                 //El primer índice “i” recorre las filas 
-                for ( int j = 0; j < parqueadero1.length; j++ ){      //El segundo índice “j” recorre las columnas.
+            for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                 // procesamos cada elemento de la matriz
                 
                 if(parqueadero1[i][j]!=null){
-                    a=a+"Vehiculo con placa: "+parqueadero1[i][j].placa()+"\n";
+                    a=a+"Vehiculo con placa: "+parqueadero1[i][j].getPlaca()+"\n";
                 }
                 
             }
@@ -141,10 +184,99 @@ public abstract class Vehiculo {
                 break;
 
                 case 6:
+                tarifaAuto=Double.parseDouble(JOptionPane.showInputDialog(null,"Ingrese la nueva tarifa para los autos:"));
+                tarifaMotoClasica=Double.parseDouble(JOptionPane.showInputDialog(null,"Ingrese la nueva tarifa para las motos híbridas:"));
+                tarifaMotoHibrida=Double.parseDouble(JOptionPane.showInputDialog(null,"Ingrese la nueva tarifa para las motos clásicas:"));
 
 
 
 
+                break;
+
+                case 7:
+
+                int horaDia=Integer.parseInt(JOptionPane.showInputDialog(null,"Elige para pasar a la siguiente hora o dia:\n1.- +1 Hora" +
+            "\n2.- +1 Dia\n" +
+            "0.- Salir"));
+
+            //Metodo para recorrer la matriz y cambiar sus horas
+            
+            
+            if(horaDia==1){
+                cambiarHora(parqueadero1,filas,columnas);
+            }
+            if(horaDia==2){
+                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                    for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+                    // procesamos cada elemento de la matriz
+                    if(parqueadero1[i][j]!=null){
+                    parqueadero1[i][j].setHora(parqueadero1[i][j].horas+24);
+                    JOptionPane.showMessageDialog(null, parqueadero1[i][j].horas);
+                    }
+                }
+                    
+                    
+                }
+                }
+
+                break;
+
+                case 8:
+                int diarioMensual=Integer.parseInt(JOptionPane.showInputDialog(null,"Elige para un reporte diario o mensual:\n1.- Reporte diario" +
+            "\n2.- Reporte mensual\n" +
+            "0.- Salir"));
+
+            //Metodo para recorrer la matriz y cambiar sus horas
+           
+            if(diarioMensual==1){
+                Double horasAux;
+                Double totalRecogido=0.0;
+            
+            for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+                // procesamos cada elemento de la matriz
+                if (parqueadero1[i][j]!=null){
+                if(parqueadero1[i][j].horas>24)
+                {
+                horasAux=Double.parseDouble(""+24);
+                }
+                else
+                {
+                    horasAux=Double.parseDouble(""+parqueadero1[i][j].horas);
+                }
+                totalRecogido=horasAux*parqueadero1[i][j].tarifa++;
+            }
+            }
+            
+            }
+            
+            JOptionPane.showMessageDialog(null,"El total recogido hoy es de: $" +totalRecogido);
+            }
+            if(diarioMensual==2){
+                Double horasAux;
+                Double totalRecogido=0.0;
+                
+                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                    for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+                    // procesamos cada elemento de la matriz
+                    
+                    if(parqueadero1[i][j]!=null){
+                     if (parqueadero1[i][j].horas>720 ){
+                    horasAux=Double.parseDouble(""+720);
+                    }
+                    else{
+                        horasAux=Double.parseDouble(""+parqueadero1[i][j].horas);
+                    }
+                    totalRecogido=totalRecogido+(horasAux*parqueadero1[i][j].tarifa);
+                }
+                    
+                }
+                
+            }
+            
+            JOptionPane.showMessageDialog(null,"El total recogido del mes es de: $" +totalRecogido);
+            
+        }
                 break;
             case 0: 
             JOptionPane.showMessageDialog(null,"Adios!");
@@ -157,8 +289,22 @@ public abstract class Vehiculo {
             System.out.println("Error!");
         }}
 
+
     }
- 
+    public static String cambiarHora(Vehiculo[][] matriz, int filas, int columnas){
+    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+        for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+        // procesamos cada elemento de la matriz
+        if(matriz[i][j]!=null){
+        matriz[i][j].setHora(matriz[i][j].horas+1);
+        
+        JOptionPane.showMessageDialog(null, matriz[i][j].horas);
+        }
+    }
+    }
+        return "Listo";
+        
+    }
 
 
 
