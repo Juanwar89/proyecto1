@@ -36,6 +36,7 @@ public abstract class Vehiculo {
          double tarifaMotoClasica=2000;
          double tarifaMotoHibrida=3000;
          double tarifaAuto=4000;
+         double gananciasTotales=0;
 //Creacion del arreglo que representara el parqueadero
          int filas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas filas es el parqueadero?"));
          int columnas=Integer.parseInt(JOptionPane.showInputDialog(null,"¿De cuantas columnas es el parqueadero?"));
@@ -55,11 +56,12 @@ public abstract class Vehiculo {
         "5.- Consulta de propietario\n" +
         "6.- Modificar tarifa\n" +
         "7.-Pasar hora o dia\n"+
-        "8.-Reporte Diario y Mensual\n"+
+        "8.-Reporte Diario y Mensual de ganancias estimadas\n"+
+        "9.-Ganancias\n"+
         "0.- Salir\n"+
-        "Tarifa Auto: $"+tarifaAuto+" por hora.\n"+
-        "Tarifa Moto Clásica: $"+tarifaMotoClasica+" por hora.\n"+
-        "Tarifa Moto Híbrida: $"+tarifaMotoHibrida+" por hora.\n"+
+        "Tarifa Auto: $"+tarifaAuto+" pesos por hora.\n"+
+        "Tarifa Moto Clásica: $"+tarifaMotoClasica+" pesos por hora.\n"+
+        "Tarifa Moto Híbrida: $"+tarifaMotoHibrida+" pesos por hora.\n"+
         
         "Nota: Por un dia se cobran las 24 horas. "
           ));
@@ -84,7 +86,7 @@ public abstract class Vehiculo {
             String tipoMoto="";
             String placa=JOptionPane.showInputDialog(null,"Placa:");
             String modelo=JOptionPane.showInputDialog(null,"Modelo:");
-            String velocidadMaxima=JOptionPane.showInputDialog(null,"Velocidad maxima:");
+            int velocidadMaxima=Integer.parseInt(JOptionPane.showInputDialog(null,"Velocidad maxima:"));
             //Codigo para elegir el tipo de moto
             int queTipo=Integer.parseInt(JOptionPane.showInputDialog(null,"Qué tipo de moto?:\n1.- Hibrida" +
             "\n2.- Clasica\n" +
@@ -104,19 +106,20 @@ public abstract class Vehiculo {
 
           var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario,tarifaMoto,0);
 
-          //Asignacion de puesto en el parqueadero
-          int i=Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"));
-          int j=Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"));
-
-          //Metodo para verificar que el puesto este vacio y el vehiculo no este ya registrado
           
-          if(parqueadero1[i][j]==null )
-          {
-            parqueadero1[i][j]=moto;
+          //Asignación de puesto en el parqueadero
+          
+          for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+            for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+            // procesamos cada elemento de la matriz
+            if(parqueadero1[i][j]==null){
+                parqueadero1[i][j]=moto;
+                JOptionPane.showInputDialog(null,"Agregado exitosamente:");
+                i=filas+1;
+            }
+            
         }
-
-          
-          Parqueadero.agregarVehiculo(moto);
+        }
         }
 
         //Creacion de auto
@@ -128,22 +131,46 @@ public abstract class Vehiculo {
 
           var auto= new Auto(placa, modelo,propietario,tarifaAuto,0);
           //Asignación de puesto en el parqueadero
-          int a=Integer.parseInt(JOptionPane.showInputDialog(null,"En que fila quiere asignarlo:"));
-          int b=Integer.parseInt(JOptionPane.showInputDialog(null,"En que columna quiere asignarlo:"));
-          //Metodo para verificar que el puesto este vacio y el vehiculo no este ya registrado
-          if (parqueadero1[a][b]==null){
-          parqueadero1[a][b]=auto;
+          
+          for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+              for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+              // procesamos cada elemento de la matriz
+              if(parqueadero1[i][j]==null){
+                
+                  parqueadero1[i][j]=auto;
+                  JOptionPane.showMessageDialog(null,"Agregado exitosamente");
+                  
+                  i=filas+1;
+              }
+              
+          }
+          }
         }
-         
 
-        Parqueadero.agregarVehiculo(auto);
-        }
                 break;
+
             case 2: 
              //Eliminacion de vehivulo
-            int fila=Integer.parseInt(JOptionPane.showInputDialog(null,"Sacar vehiculo de la fila:"));
-            int columna=Integer.parseInt(JOptionPane.showInputDialog(null,"Sacar vehiculo de la columna:"));
-                parqueadero1[fila][columna]=null;
+           String placaEliminar=Parqueadero.ingresar("Escriba la placa del vehiculo que quiere eliminar: \n"+ Parqueadero.imprimirMatrizVehiculo(parqueadero1,filas,columnas));
+             
+
+          //Eliminacion del puesto
+          for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+            for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
+            // procesamos cada elemento de la matriz
+            if(parqueadero1[i][j]!=null){
+            if(parqueadero1[i][j].getPlaca().equals(placaEliminar)){
+                 //Factura
+                JOptionPane.showMessageDialog(null, "El total a pagar es de "+parqueadero1[i][j].horas*parqueadero1[i][j].tarifa);
+                gananciasTotales=gananciasTotales+(parqueadero1[i][j].horas*parqueadero1[i][j].tarifa);
+                parqueadero1[i][j]=null;
+                i=filas+1;
+            }
+        }
+        }
+        }
+       
+                
                 break;
 
             case 3: 
@@ -155,7 +182,7 @@ public abstract class Vehiculo {
                 
                 break;
             case 4: 
-            Parqueadero.imprimirMatrizResultado("La matriz es: \n" + Parqueadero.imprimirMatriz(parqueadero1, filas, columnas));
+            Parqueadero.imprimirMatrizResultado("Parqueadero: \n" + Parqueadero.imprimirMatrizVehiculo(parqueadero1, filas, columnas));
 
             //Metodo para recorrer el arreglo de vehiculos e imprimir sus placas
             String a="";
@@ -164,7 +191,7 @@ public abstract class Vehiculo {
                 // procesamos cada elemento de la matriz
                 
                 if(parqueadero1[i][j]!=null){
-                    a=a+"Vehiculo con placa: "+parqueadero1[i][j].getPlaca()+"\n";
+                    a=a+"Vehiculo con placa: "+parqueadero1[i][j].getPlaca()+"  Horas: "+parqueadero1[i][j].horas+ "  Tarifa: "+parqueadero1[i][j].tarifa+"\n";
                 }
                 
             }
@@ -200,7 +227,6 @@ public abstract class Vehiculo {
             "0.- Salir"));
 
             //Metodo para recorrer la matriz y cambiar sus horas
-            
             
             if(horaDia==1){
                 cambiarHora(parqueadero1,filas,columnas);
@@ -267,7 +293,7 @@ public abstract class Vehiculo {
                     else{
                         horasAux=Double.parseDouble(""+parqueadero1[i][j].horas);
                     }
-                    totalRecogido=totalRecogido+(horasAux*parqueadero1[i][j].tarifa);
+                    totalRecogido=horasAux*parqueadero1[i][j].tarifa++;
                 }
                     
                 }
@@ -278,19 +304,29 @@ public abstract class Vehiculo {
             
         }
                 break;
+
+                case 9:
+                JOptionPane.showMessageDialog(null, "Ganancias totales: $"+ gananciasTotales +" pesos");
+
+
+
+                break;
             case 0: 
             JOptionPane.showMessageDialog(null,"Adios!");
                 break;
             default:
-                System.out.println("Número no reconocido");break;
+            JOptionPane.showMessageDialog(null,"Numero no reconocido");
+                
             }
         
         }catch(Exception e){
-            System.out.println("Error!");
+            
+            System.out.println("Error");break;
         }}
 
 
     }
+    //Metodo que añade una hora
     public static String cambiarHora(Vehiculo[][] matriz, int filas, int columnas){
     for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
         for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.

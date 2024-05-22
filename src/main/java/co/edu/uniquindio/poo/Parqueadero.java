@@ -50,7 +50,7 @@ public class Parqueadero {
         boolean existe = false;
         for(Vehiculo vehicu : vehiculos){
             
-            if(vehicu != null && vehicu.getPlaca()==(placa)){
+            if(vehicu.getPlaca()==(placa)){
                 existe = true;
             }
         }
@@ -90,6 +90,27 @@ public static String verificarPlaca(Vehiculo[][] matriz, String placa){
 	return resultado;
 }
 
+// función para imprimir matriz con los vehiculos
+public static String imprimirMatrizVehiculo(Vehiculo[][] matriz,int a, int b){	
+    String resultado = "";
+    for(int i = 0; i < a; i++){
+        for(int j = 0; j <b; j++){
+           if(matriz[i][j]==null){
+            resultado += matriz[i][j] + "  ";
+           }
+           else{
+            resultado +=matriz[i][j].placa + "  ";
+           }
+        }
+        resultado = resultado + "\n";
+    }
+    return resultado;
+}
+
+// procedimiento para imprimir una matriz en un JoptionPane
+public static String ingresar(String mensaje){
+	return JOptionPane.showInputDialog(null, mensaje);
+}
 
 
 
