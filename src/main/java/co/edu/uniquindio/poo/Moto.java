@@ -2,25 +2,26 @@ package co.edu.uniquindio.poo;
 public class Moto extends Vehiculo {
 
     public int velocidadMaxima;
-    public String tipoMoto;
+    public TipoMoto tipoMoto;
      //Constructor
-    public Moto(String placa,String modelo, int velocidadMaxima,String tipoMoto, Propietario propietario, double tarifa, int horas){
-        this.placa=placa;
-        this.propietario=propietario;
-        this.modelo=modelo;
-        this.tipoMoto=tipoMoto;
+    public Moto(String placa, String modelo, int velocidadMaxima, TipoMoto tipoMoto, Propietario propietario, double tarifa, int horas){
+        super(placa, modelo, propietario, tarifa, horas);
+        this.tipoMoto = tipoMoto;
         this.velocidadMaxima=velocidadMaxima;
-        this.tarifa=tarifa;
-        this.horas=horas;
-        assert placa != null && !placa.isBlank() :"La placa no puede ser null y tampoco puede ser vacio";
-
-        assert propietario != null :"El propietario no puede ser null y tampoco puede ser vacio";
-
-        assert modelo != null && !modelo.isBlank() :"El modelo no puede ser null y tampoco puede ser vacio";
-         
-        assert tarifa >= 0;
         assert velocidadMaxima >=0 && velocidadMaxima<=120;
+    }
 
-        
+    //Metodos get y set
+    public int getVelocidadMaxima() {
+        return velocidadMaxima;
+    }
+    public void setVelocidadMaxima(int velocidadMaxima) {
+        this.velocidadMaxima = velocidadMaxima;
+    }
+    public TipoMoto getTipoMoto() {
+        return tipoMoto;
+    }
+    public void setTipoMoto(TipoMoto tipoMoto) {
+        this.tipoMoto = tipoMoto;
     }
 }
