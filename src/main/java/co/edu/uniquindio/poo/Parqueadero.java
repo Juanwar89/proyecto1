@@ -203,7 +203,7 @@ public class Parqueadero {
                     var auto= new Auto(placa, modelo,propietario,tarifaAuto,0);
 
                     //Asignación de puesto en el parqueadero
-                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                         for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                         // procesamos cada elemento de la matriz
                             if(parqueadero1[i][j]==null){
@@ -223,7 +223,7 @@ public class Parqueadero {
                 
 
                 //Eliminacion del puesto
-                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                     for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                     // procesamos cada elemento de la matriz
                         if(parqueadero1[i][j]!=null){
@@ -251,7 +251,7 @@ public class Parqueadero {
 
                 //Metodo para recorrer el arreglo de vehiculos e imprimir sus placas, horas y tarifa.
                 String a=" ";
-                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                     for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                         // procesamos cada elemento de la matriz
                         if(parqueadero1[i][j]!=null){
@@ -285,12 +285,12 @@ public class Parqueadero {
                 if(horaDia==1){
                     cambiarHora(parqueadero1,filas,columnas);
                 }if(horaDia==2){
-                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                         for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                         // procesamos cada elemento de la matriz
                             if(parqueadero1[i][j]!=null){
                                 parqueadero1[i][j].setHora(parqueadero1[i][j].horas+24);
-                                JOptionPane.showMessageDialog(null, parqueadero1[i][j].horas);
+                                JOptionPane.showMessageDialog(null,"Placa: "+ parqueadero1[i][j].placa+" horas:"+parqueadero1[i][j].horas);
                             }
                         }
                     }
@@ -306,7 +306,7 @@ public class Parqueadero {
                     Double horasAux;
                     Double totalRecogido=0.0;
                     //Recorre la matriz y devuelve las ganancias estimadas de las ultimas 24 horas.
-                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                    for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                         for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                         // procesamos cada elemento de la matriz
                             if (parqueadero1[i][j]!=null){
@@ -324,7 +324,7 @@ public class Parqueadero {
                         Double horasAux;
                         Double totalRecogido=0.0;
                         //Recorre la matriz y devuelve las ganancias del mes
-                        for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+                        for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
                             for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                             // procesamos cada elemento de la matriz
                                 if(parqueadero1[i][j]!=null){
@@ -358,12 +358,12 @@ public class Parqueadero {
 
     //Metodo que añade una hora
     public static String cambiarHora(Vehiculo[][] matriz, int filas, int columnas){
-        for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
+        for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas
             for ( int j = 0; j < columnas; j++ ){      //El segundo índice “j” recorre las columnas.
                 // procesamos cada elemento de la matriz
                 if(matriz[i][j]!=null){
                     matriz[i][j].setHora(matriz[i][j].horas+1);
-                    JOptionPane.showMessageDialog(null, matriz[i][j].horas);
+                    JOptionPane.showMessageDialog(null,"Placa: "+ matriz[i][j].placa+" horas:"+matriz[i][j].horas);
                 }
             }
         }
