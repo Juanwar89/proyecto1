@@ -1,12 +1,17 @@
 package co.edu.uniquindio.poo;
 
+<<<<<<< Updated upstream
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.swing.JOptionPane;
+=======
+import static org.junit.jupiter.api.Assertions.*;
+>>>>>>> Stashed changes
 
 import org.junit.jupiter.api.Test;
 
 public class ParqueaderoTest {
+<<<<<<< Updated upstream
     
 
     
@@ -68,5 +73,37 @@ public class ParqueaderoTest {
         assertThrows(AssertionError.class, () -> {
             parqueadero.agregarPuesto(auto2, 5, 5);
         });
+=======
+    /**
+     * Parqueadero con datos completos
+     */
+    @Test
+    public void datosCompletos() {
+    
+    Parqueadero parqueadero= new Parqueadero("Oasis");
+    assertEquals("Oasis", parqueadero.nombre);   
+        
+    }
+
+    /**
+     * Parqueadero con datos nulos
+     */
+    @Test
+    public void datosNulos() {
+    
+    assertThrows(Throwable.class, ()-> new Parqueadero(null));
+        
+    }
+
+    
+    /**
+     * Parqueadero con datos en blanco
+     */
+    @Test
+    public void datosBlanco() {
+    
+    assertThrows(Throwable.class, ()-> new Parqueadero(""));
+        
+>>>>>>> Stashed changes
     }
 }
