@@ -69,12 +69,27 @@ public abstract class Vehiculo {
         switch(menu){
             case 1:
             //Datos del propietario
-            String nPropietario=JOptionPane.showInputDialog(null,"Nombre del propietario");
-            String aPropietario=JOptionPane.showInputDialog(null,"Apellido del propietario");
-            String idPropietario=JOptionPane.showInputDialog(null,"ID del propietario");
-            
 
+            String nPropietario=JOptionPane.showInputDialog(null,"Nombre del propietario");
+            if(nPropietario == null || nPropietario.isBlank())
+            {
+                break;
+            }
+           
+            String aPropietario=JOptionPane.showInputDialog(null,"Apellido del propietario");
+            if(aPropietario == null || aPropietario.isBlank())
+            {
+                break;
+            }
+            String idPropietario=JOptionPane.showInputDialog(null,"ID del propietario");
+            if(idPropietario == null || idPropietario.isBlank())
+            {
+                break;
+            }
+            
+               
             var propietario= new Propietario(nPropietario,aPropietario,idPropietario);
+            
 
             //Elige el tipo de vehiculo
         int queVehiculo=Integer.parseInt(JOptionPane.showInputDialog(null,"Qué tipo de vehiculo?:\n1.- Moto" +
@@ -85,10 +100,22 @@ public abstract class Vehiculo {
         if(queVehiculo==1)
         {   //Creacion de moto
             String tipoMoto="";
-            String placa=JOptionPane.showInputDialog(null,"Placa:");
-            String modelo=JOptionPane.showInputDialog(null,"Modelo:");
+            String placa1=JOptionPane.showInputDialog(null,"Placa:");
+            if(placa1 == null || placa1.isBlank())
+            {
+                break;
+            }
+            String modelo1=JOptionPane.showInputDialog(null,"Modelo:");
+            if(modelo1 == null || modelo1.isBlank())
+            {
+                break;
+            }
             int velocidadMaxima=Integer.parseInt(JOptionPane.showInputDialog(null,
             "Velocidad maxima:"));
+            if(velocidadMaxima<0 || velocidadMaxima>120)
+            {
+                break;
+            }
             
             //Codigo para elegir el tipo de moto
             int queTipo=Integer.parseInt(JOptionPane.showInputDialog(null,
@@ -108,7 +135,7 @@ public abstract class Vehiculo {
             }
 
 
-          var moto= new Moto(placa, modelo,velocidadMaxima,tipoMoto,propietario,tarifaMoto,0);
+          var moto= new Moto(placa1, modelo1,velocidadMaxima,tipoMoto,propietario,tarifaMoto,0);
 
           
           //Asignación de puesto en el parqueadero
@@ -129,11 +156,11 @@ public abstract class Vehiculo {
         //Creacion de auto
         if(queVehiculo==2)
         {   
-            String placa=JOptionPane.showInputDialog(null,"Placa:");
-            String modelo=JOptionPane.showInputDialog(null,"Modelo:");
+            String placa1=JOptionPane.showInputDialog(null,"Placa:");
+            String modelo1=JOptionPane.showInputDialog(null,"Modelo:");
             
 
-          var auto= new Auto(placa, modelo,propietario,tarifaAuto,0);
+          var auto= new Auto(placa1,modelo1,propietario,tarifaAuto,0);
           //Asignación de puesto en el parqueadero
           
           for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
@@ -234,6 +261,7 @@ public abstract class Vehiculo {
             
             if(horaDia==1){
                 cambiarHora(parqueadero1,filas,columnas);
+                JOptionPane.showMessageDialog(null, "Listo");
             }
             if(horaDia==2){
                 for ( int i = 0; i < filas; i++ ){                 //El primer índice “i” recorre las filas 
@@ -241,12 +269,12 @@ public abstract class Vehiculo {
                     // procesamos cada elemento de la matriz
                     if(parqueadero1[i][j]!=null){
                     parqueadero1[i][j].setHora(parqueadero1[i][j].horas+24);
-                    JOptionPane.showMessageDialog(null, parqueadero1[i][j].horas);
+                    
                     }
-                }
+                }   
                     
-                    
                 }
+                JOptionPane.showMessageDialog(null, "Listo");
                 }
 
                 break;

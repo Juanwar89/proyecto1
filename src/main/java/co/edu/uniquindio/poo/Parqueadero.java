@@ -18,6 +18,7 @@ public class Parqueadero {
     {
         this.nombre=nombre;
         vehiculos = new LinkedList<>();
+        assert nombre != null && !nombre.isBlank() :"El modelo no puede ser null y tampoco puede ser vacio";
         
 
     }
